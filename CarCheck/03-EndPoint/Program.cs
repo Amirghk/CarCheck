@@ -9,6 +9,8 @@ namespace CarCheck
        
         static void Main(string[] args)
         {
+            
+            
       
             if (DataStoreS == null)
             {
@@ -16,8 +18,18 @@ namespace CarCheck
             }
             DataStoreS.cars.Add(new Car("Peugeot", 2017));
             DataStoreS.customers.Add(new Customer("Amir"));
-            DataStoreS.clerks.Add(new Clerk("Joe"));
+            DataStoreS.clerks.Add(new Clerk("Joe"));          
             DataStoreS.facilities.Add(new ExaminationFacility("Ashrafi"));
+            // ---- UNIT TEST ---- 
+            DateTime date = new DateTime(2022, 4, 19);
+            DataStoreS.facilities[0].SignUps.Add(date, new List<Queue>(20));
+            for (int i = 0; i < 20; i++)
+            {
+                
+                Queue q = new Queue(0, date);
+                DataStoreS.facilities[0].SignUps[date].Add(q);
+            }
+            // --------
 
             const string address = @"../file.txt";
             // make an object of the Repositories to use
@@ -179,12 +191,12 @@ namespace CarCheck
                     int response = facility.SignUpQuery(q);
                     switch (response)
                     {
-                        case 1:
-                            
+                        case 0:
+                            // if there is a time available now we save the queue
                             queueRepo.Add(q);
                             facility.SignUps[date].Add(q);
                             break;
-                        case 2:
+                        case 1:
                             Console.WriteLine("Unlucky!");
                             return;
                     }

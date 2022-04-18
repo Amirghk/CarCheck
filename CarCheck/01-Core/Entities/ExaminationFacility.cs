@@ -34,12 +34,12 @@ public class ExaminationFacility
             if (SignUps[q.date].Count >= 20)
             {
                 Console.WriteLine($"Capacity is full on {q.date}.");
-                return 0;
+                return 1;
             }
             else
             {
                 SignUps[q.date].Add(q);
-                return 1;
+                return 0;
             }   
         }
     }
